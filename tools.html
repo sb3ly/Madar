@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="file:///D:/UST/web/img/icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>MADAR - الأدوات</title>
+
+    <style>
+        /* CSS Variables for easy theme management */
+        :root {
+            --bg-color: #000000;
+            --primary-color: #7e2eff;
+            --primary-glow: #6e44ff;
+            --secondary-glow: #a200ff;
+            --border-color: #5a14dd;
+            --text-color: #e0e0e0;
+            --card-bg: #0a0a0a;
+            --red-color: #ff4c4c;
+        }
+
+        /* Basic Setup */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                linear-gradient(45deg, rgba(125, 55, 255, 0.342) 1px, transparent 1px),
+                linear-gradient(-45deg, rgba(157, 71, 255, 0.3) 1px, transparent 1px);
+            background-size: 25px 25px;
+            background-blend-mode: lighten;
+            font-family: 'Tahoma', 'Segoe UI', Arial, sans-serif;
+            color: var(--text-color);
+            padding-top: 80px; /* Add padding to body to avoid content hiding behind sticky header */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- Header & Navigation --- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+
+        .site-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .site-logo .red {
+            color: var(--red-color);
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .main-nav a {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            color: var(--primary-color);
+            text-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        #burger-icon {
+            display: none; /* Hidden on desktop */
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color); /* لون الأيقونة */
+            transition: color 0.3s;
+        }
+
+        #burger-icon:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Main Content --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+            padding: 2.5rem;
+            border-radius: 12px;
+            background-color: rgba(0, 0, 0, 0.85);
+        }
+
+        .page-title {
+            font-size: 2rem;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .intro-description {
+            font-size: 1.2rem;
+            text-align: center;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        /* Grid for cards */
+        .grid {
+            display: grid;
+            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px var(--secondary-glow);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .card-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        /* --- Footer --- */
+        .main-footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+            background-color: rgba(10, 10, 10, 0.5);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+            margin: 0 15px;
+            color: #aaa;
+            transition: color 0.3s, transform 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+        
+        .copyright {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* --- Responsive Design for Mobile --- */
+        @media (max-width: 768px) {
+            .main-nav {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                display: none; /* Hide nav by default */
+                transition: all 0.3s ease-in-out; /* إضافة انتقال لظهور القائمة */
+            }
+
+            .main-nav.active {
+                display: block; /* Show nav when active */
+            }
+            
+            .main-nav ul {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                gap: 0;
+            }
+
+            .main-nav ul li {
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .main-nav ul li:last-child {
+                border-bottom: none;
+            }
+
+            .main-nav a {
+                display: block;
+                padding: 15px;
+            }
+            
+            #burger-icon {
+                display: block; /* Show burger icon */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <a href="index.html" class="site-logo">M<span class="red">a</span>dar</a>
+        
+        <nav class="main-nav" id="main-nav">
+             <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="Tutorials.html">Tutorials</a></li>
+                <li><a href="tools.html ">Tools</a></li>
+                <li><a href="about.html ">whoami</a></li>
+            </ul>
+        </nav>
+
+        <div id="burger-icon">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </header>
+
+    <main>
+        <section class="container">
+            <h1 class="page-title">جميع الأدوات من حساب <a href="https://github.com/sb3ly" style="color:var(--primary-color); text-decoration: underline;">sb3ly</a></h1>
+            <p class="intro-description">
+                في هذه الصفحة، ستجد مجموعة من الأدوات التي تم تطويرها ومشاركتها في حساب GitHub الخاص بـ <span style="color:var(--primary-color)">sb3ly</span>.
+            </p>
+        </section>
+
+        <section class="container">
+            <div class="grid">
+                <div class="card">
+                    <h2 class="card-title">security</h2>
+                    <p class="card-content">أداة عامة متعلقة بالأمن.</p>
+                    <a href="https://github.com/sb3ly/security" target="_blank" class="card-link">عرض على GitHub</a>
+                </div>
+                <div class="card">
+                    <h2 class="card-title">UST-phishing</h2>
+                    <p class="card-content">تدمج هذه الأداة ثلاث أدوات شائعة للاختراق الأخلاقي والتصيد الاحتيالي: Zphisher و CamPhisher و WiFiPhisher، مع دعم إضافي لـ Cloudflare Tunnel.</p>
+                    <a href="https://github.com/sb3ly/UST-phishing" target="_blank" class="card-link">عرض على GitHub</a>
+                </div>
+                <div class="card">
+                    <h2 class="card-title">scanWAS</h2>
+                    <p class="card-content">يكتشف أجهزة الشبكة باستخدام fping ويحاكي هجوم ARP spoofing باستخدام arpspoof لتقييم المخاطر الأمنية. يساعد في تحديد نقاط الضعف وتعزيز الدفاعات ضد هجمات MITM.</p>
+                    <a href="https://github.com/sb3ly/scanWAS" target="_blank" class="card-link">عرض على GitHub</a>
+                </div>
+                <div class="card">
+                    <h2 class="card-title">scanARe</h2>
+                    <p class="card-content">نظام لمراقبة الشبكة واكتشاف التهديدات باستخدام Flask و Scapy. يكتشف الأجهزة المتصلة، يحلل الحزم، ويسجل الطلبات المشبوهة. يستخدم fping للمسح الضوئي، ويوفر معلومات مفصلة.</p>
+                    <a href="https://github.com/sb3ly/scanARe" target="_blank" class="card-link">عرض على GitHub</a>
+                </div>
+                <div class="card">
+                    <h2 class="card-title">DoS</h2>
+                    <p class="card-content">هجوم حجب الخدمة (DoS) هو هجوم إلكتروني يهدف إلى جعل موقع ويب أو خادم أو شبكة غير متوفرة عن طريق إغراقها بحركة مرور مفرطة أو طلبات تستهلك موارد كبيرة.</p>
+                    <a href="https://github.com/sb3ly/DoS" target="_blank" class="card-link">عرض على GitHub</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="social-links">
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <p class="copyright">&copy; 2025 Madar. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- وظيفة قائمة البرجر (Burger Menu) ---
+            const burgerIcon = document.getElementById('burger-icon');
+            const mainNav = document.getElementById('main-nav');
+
+            if (burgerIcon && mainNav) {
+                // عند النقر على أيقونة البرجر
+                burgerIcon.addEventListener('click', function() {
+                    mainNav.classList.toggle('active'); // تبديل فئة 'active' على القائمة
+                    const icon = burgerIcon.querySelector('i'); // الحصول على أيقونة Font Awesome (عادةً ما تكون عنصر <i>)
+
+                    // تغيير أيقونة البرجر بين "القوائم" و "X" لتعكس حالة القائمة
+                    if (mainNav.classList.contains('active')) {
+                        icon.classList.remove('fa-bars'); // إزالة أيقونة الخطوط (القوائم)
+                        icon.classList.add('fa-times');   // إضافة أيقونة X (إغلاق)
+                    } else {
+                        icon.classList.remove('fa-times'); // إزالة أيقونة X
+                        icon.classList.add('fa-bars');     // إضافة أيقونة الخطوط
+                    }
+                });
+
+                // إغلاق القائمة عند النقر على أي رابط (مفيد لتطبيقات الصفحة الواحدة أو للانتقال السلس)
+                const navLinks = mainNav.querySelectorAll('a'); // الحصول على جميع الروابط داخل القائمة
+                navLinks.forEach(link => { // تكرار على كل رابط
+                    link.addEventListener('click', () => {
+                        // إذا كانت القائمة مفتوحة، أغلقها وغير الأيقونة
+                        if (mainNav.classList.contains('active')) {
+                            mainNav.classList.remove('active'); // إزالة فئة 'active' لإخفاء القائمة
+                            const icon = burgerIcon.querySelector('i');
+                            icon.classList.remove('fa-times'); // إزالة أيقونة X
+                            icon.classList.add('fa-bars');     // إضافة أيقونة الخطوط
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
