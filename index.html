@@ -18,6 +18,7 @@
             --text-color: #e0e0e0;
             --card-bg: #0a0a0a;
             --red-color: #ff4c4c;
+            --accent-green: #39ff14; /* لون جديد للتمييز */
         }
 
         /* Basic Setup */
@@ -37,6 +38,9 @@
             font-family: 'Tahoma', 'Segoe UI', Arial, sans-serif;
             color: var(--text-color);
             padding-top: 80px; /* Add padding to body to avoid content hiding behind sticky header */
+            min-height: 100vh; /* تأكد أن الـ body يملأ الشاشة لتثبيت الـ footer في الأسفل */
+            display: flex;
+            flex-direction: column;
         }
 
         a {
@@ -103,27 +107,117 @@
         }
 
         /* --- Main Content --- */
+        main {
+            flex-grow: 1; /* يسمح للمحتوى بأن يأخذ المساحة المتبقية ويدفع الـ footer للأسفل */
+        }
+
         .container {
             max-width: 1200px;
-            margin: 0 auto 2rem auto;
+            margin: 2rem auto; /* تعديل الهامش العلوي والسفلي */
             padding: 2.5rem;
             border-radius: 12px;
             background-color: rgba(0, 0, 0, 0.85);
+            border: 1px solid var(--border-color); /* إضافة حدود للمزيد من التحديد */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* ظل خفيف */
         }
 
         .page-title {
-            font-size: 2rem;
+            font-size: 2.5rem; /* تكبير حجم الخط */
             color: var(--text-color);
             text-align: center;
-            margin-bottom: 2rem;
-            text-shadow: 0 0 12px var(--primary-glow);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 15px var(--primary-glow); /* توهج أكبر */
         }
 
         .intro-description {
-            font-size: 1.2rem;
+            font-size: 1.25rem; /* تكبير الخط */
             text-align: center;
-            line-height: 1.7;
+            line-height: 1.8; /* تباعد الأسطر */
             margin-bottom: 2rem;
+            max-width: 900px; /* تحديد أقصى عرض للفقرة */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: block; /* لجعل الزر يأخذ عرض كامل السطر ويكون في المنتصف */
+            width: fit-content; /* عرض الزر بحسب المحتوى */
+            margin: 2rem auto 0 auto; /* توسيط الزر وإضافة هامش علوي */
+            padding: 15px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .cta-button:hover {
+            background-color: var(--primary-glow);
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px var(--secondary-glow);
+        }
+
+        /* Section: Why Madar */
+        .why-madar-section {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .why-madar-title {
+            font-size: 2rem;
+            color: var(--accent-green); /* لون مميز للعنوان */
+            margin-bottom: 2.5rem;
+            text-shadow: 0 0 10px var(--accent-green);
+        }
+
+        .why-madar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .why-madar-item {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .why-madar-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .why-madar-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .why-madar-item h3 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .why-madar-item p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-color);
         }
 
         /* Grid for cards */
@@ -160,7 +254,7 @@
             line-height: 1.6;
             flex-grow: 1;
         }
-        
+
         /* --- Footer --- */
         .main-footer {
             text-align: center;
@@ -168,6 +262,7 @@
             margin-top: 3rem;
             background-color: rgba(10, 10, 10, 0.5);
             border-top: 1px solid var(--border-color);
+            width: 100%;
         }
 
         .social-links a {
@@ -176,12 +271,12 @@
             color: #aaa;
             transition: color 0.3s, transform 0.3s;
         }
-        
+
         .social-links a:hover {
             color: var(--primary-color);
             transform: scale(1.2);
         }
-        
+
         .copyright {
             margin-top: 1rem;
             font-size: 0.9rem;
@@ -203,7 +298,7 @@
             .main-nav.active {
                 display: block; /* Show nav when active */
             }
-            
+
             .main-nav ul {
                 flex-direction: column;
                 width: 100%;
@@ -214,7 +309,7 @@
             .main-nav ul li {
                 border-bottom: 1px solid var(--border-color);
             }
-            
+
             .main-nav ul li:last-child {
                 border-bottom: none;
             }
@@ -223,9 +318,52 @@
                 display: block;
                 padding: 15px;
             }
-            
+
             #burger-icon {
                 display: block; /* Show burger icon */
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .intro-description {
+                font-size: 1.1rem;
+            }
+
+            .why-madar-title {
+                font-size: 1.8rem;
+            }
+
+            .why-madar-item i {
+                font-size: 2rem;
+            }
+
+            .why-madar-item h3 {
+                font-size: 1.2rem;
+            }
+
+            .cta-button {
+                padding: 12px 25px;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .intro-description {
+                font-size: 1rem;
+            }
+
+            .why-madar-title {
+                font-size: 1.6rem;
             }
         }
     </style>
@@ -234,7 +372,7 @@
 
     <header class="main-header">
         <a href="#" class="site-logo">M<span class="red">a</span>dar</a>
-        
+
         <nav class="main-nav" id="main-nav">
             <ul>
                 <li><a href="index.html" class="active">Home</a></li>
@@ -250,56 +388,34 @@
     </header>
 
     <main>
-        <section class="container">
+        <section class="container welcome-section">
             <h1 class="page-title">مرحباً بك في عالم <span style="color:var(--primary-color)">Madar</span></h1>
             <p class="intro-description">
-                مشروع شخصي أقدّم من خلاله شروحات، أدوات، وطرق في اكتشاف الثغرات، واستخدام الأوامر المختصرة، بالإضافة إلى مشاركة تجاربي في عالم الاختراق الأخلاقي.
+                Madar هو مشروع شخصي يهدف إلى إثراء المحتوى العربي في مجال الأمن السيبراني. هنا، أشارك خبراتي في **اكتشاف الثغرات**، أقدم **شروحات عملية**، وأستعرض **أدوات قوية** لمساعدتك في رحلتك نحو عالم الاختراق الأخلاقي.
             </p>
+            <a href="Tutorials.html" class="cta-button">ابدأ رحلتك معنا!</a>
         </section>
 
-        <section class="container" id="tutorials">
-            <h2 class="page-title">أحدث الشروحات والأدوات</h2>
-            <div class="grid">
-                <div class="card">
-                    <a href="https://google.com">
-                    <div class="card-title">BugBounty</div>
-                    <div class="card-content">مجموعة من الشروحات والمقالات حول اكتشاف الثغرات والمكافآت.</div>
-                    </a>
+        <section class="container why-madar-section">
+            <h2 class="why-madar-title">لماذا تختار <span style="color:var(--primary-color)">Madar</span>؟</h2>
+            <div class="why-madar-grid">
+                <div class="why-madar-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>شروحات متعمقة</h3>
+                    <p>مقالات وشروحات تفصيلية تغطي أحدث تقنيات اكتشاف الثغرات والأمن السيبراني، مناسبة لكل المستويات.</p>
                 </div>
-                <div class="card">
-                    <a href="https://google.com">
-                    <div class="card-title">Malware</div>
-                    <div class="card-content">تحليلات لأنواع مختلفة من البرمجيات الخبيثة وطرق عملها.</div>
-                    </a>
+                <div class="why-madar-item">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    <h3>أدوات عملية</h3>
+                    <p>مجموعة من الأدوات الموصى بها والمطوّرة خصيصاً لمساعدتك في مهامك الأمنية.</p>
                 </div>
-                <div class="card">
-                    <a href="https://google.com">
-                    <div class="card-title">MEMZ-Clean</div>
-                    <div class="card-content">فيروس يقوم بعرض تأثيرات مرئية مدهشة على الشاشة دون إحداث أضرار للنظام.</div>
-                    </a>
+                <div class="why-madar-item">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <h3>تجارب واقعية</h3>
+                    <p>أشارك معك خلاصة تجاربي الشخصية والدروس المستفادة من مشاريع الأمن السيبراني.</p>
                 </div>
-                <div class="card">
-                    <a href="https://google.com">
-                    <div class="card-title">BugBounty</div>
-                    <div class="card-content">مجموعة من الشروحات والمقالات حول اكتشاف الثغرات والمكافآت.</div>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="https://google.com">
-                    <div class="card-title">Malware</div>
-                    <div class="card-content">تحليلات لأنواع مختلفة من البرمجيات الخبيثة وطرق عملها.</div>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="https://google.com">
-                    <div class="card-title">MEMZ-Clean</div>
-                    <div class="card-content">فيروس يقوم بعرض تأثيرات مرئية مدهشة على الشاشة دون إحداث أضرار للنظام.</div>
-                    </a>
-                </div>
+            </div>
         </section>
-
-     
-    </main>
 
     <footer class="main-footer">
         <div class="social-links">
