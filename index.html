@@ -1,443 +1,357 @@
- <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>اهلا بك في مدونتي الشخصية</title>
-            <style>
-                @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="file:///D:/UST/web/img/icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>MADAR - الرئيسية</title>
 
-                :root {
-                    --primary-color: #ff7f50;
-                    --secondary-color: #6e44ff;
-                    --accent-color: #5dc05d;
-                    --background-color: #000;
-                    --container-bg: rgba(0, 20, 40, 0.8);
-                }
+    <style>
+        /* CSS Variables for easy theme management */
+        :root {
+            --bg-color: #000000;
+            --primary-color: #7e2eff;
+            --primary-glow: #6e44ff;
+            --secondary-glow: #a200ff;
+            --border-color: #5a14dd;
+            --text-color: #e0e0e0;
+            --card-bg: #0a0a0a;
+            --red-color: #ff4c4c;
+        }
 
-                    .responsive-img {
-                        width: 100%; /* اجعل الصورة تأخذ عرض الحاوية بالكامل */
-                        height: 200px; /* حدد ارتفاع ثابت (يمكنك تغييره حسب الحاجة) */
-                        object-fit: cover; /* تأكد من ملء الصورة للحاوية دون تشويه */
-                        display: block; /* منع وجود الفراغات البيضاء أسفل الصورة */
-                        margin: 0 auto; /* جعل الصورة تتمركز أفقياً */
+        /* Basic Setup */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                linear-gradient(45deg, rgba(125, 55, 255, 0.342) 1px, transparent 1px),
+                linear-gradient(-45deg, rgba(157, 71, 255, 0.3) 1px, transparent 1px);
+            background-size: 25px 25px;
+            background-blend-mode: lighten;
+            font-family: 'Tahoma', 'Segoe UI', Arial, sans-serif;
+            color: var(--text-color);
+            padding-top: 80px; /* Add padding to body to avoid content hiding behind sticky header */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- Header & Navigation --- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+
+        .site-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .site-logo .red {
+            color: var(--red-color);
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .main-nav a {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            color: var(--primary-color);
+            text-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        #burger-icon {
+            display: none; /* Hidden on desktop */
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color); /* لون الأيقونة */
+            transition: color 0.3s;
+        }
+
+        #burger-icon:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Main Content --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+            padding: 2.5rem;
+            border-radius: 12px;
+            background-color: rgba(0, 0, 0, 0.85);
+        }
+
+        .page-title {
+            font-size: 2rem;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .intro-description {
+            font-size: 1.2rem;
+            text-align: center;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        /* Grid for cards */
+        .grid {
+            display: grid;
+            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px var(--secondary-glow);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .card-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        /* --- Footer --- */
+        .main-footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+            background-color: rgba(10, 10, 10, 0.5);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+            margin: 0 15px;
+            color: #aaa;
+            transition: color 0.3s, transform 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+        
+        .copyright {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* --- Responsive Design for Mobile --- */
+        @media (max-width: 768px) {
+            .main-nav {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                display: none; /* Hide nav by default */
+                transition: all 0.3s ease-in-out; /* إضافة انتقال لظهور القائمة */
+            }
+
+            .main-nav.active {
+                display: block; /* Show nav when active */
+            }
+            
+            .main-nav ul {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                gap: 0;
+            }
+
+            .main-nav ul li {
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .main-nav ul li:last-child {
+                border-bottom: none;
+            }
+
+            .main-nav a {
+                display: block;
+                padding: 15px;
+            }
+            
+            #burger-icon {
+                display: block; /* Show burger icon */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <a href="#" class="site-logo">M<span class="red">a</span>dar</a>
+        
+        <nav class="main-nav" id="main-nav">
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="Tutorials.html">Tutorials</a></li>
+                <li><a href="tools.html ">Tools</a></li>
+                <li><a href="about.html ">whoami</a></li>
+            </ul>
+        </nav>
+
+        <div id="burger-icon">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </header>
+
+    <main>
+        <section class="container">
+            <h1 class="page-title">مرحباً بك في عالم <span style="color:var(--primary-color)">Madar</span></h1>
+            <p class="intro-description">
+                مشروع شخصي أقدّم من خلاله شروحات، أدوات، وطرق في اكتشاف الثغرات، واستخدام الأوامر المختصرة، بالإضافة إلى مشاركة تجاربي في عالم الاختراق الأخلاقي.
+            </p>
+        </section>
+
+        <section class="container" id="tutorials">
+            <h2 class="page-title">أحدث الشروحات والأدوات</h2>
+            <div class="grid">
+                <div class="card">
+                    <a href="https://google.com">
+                    <div class="card-title">BugBounty</div>
+                    <div class="card-content">مجموعة من الشروحات والمقالات حول اكتشاف الثغرات والمكافآت.</div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://google.com">
+                    <div class="card-title">Malware</div>
+                    <div class="card-content">تحليلات لأنواع مختلفة من البرمجيات الخبيثة وطرق عملها.</div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://google.com">
+                    <div class="card-title">MEMZ-Clean</div>
+                    <div class="card-content">فيروس يقوم بعرض تأثيرات مرئية مدهشة على الشاشة دون إحداث أضرار للنظام.</div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://google.com">
+                    <div class="card-title">BugBounty</div>
+                    <div class="card-content">مجموعة من الشروحات والمقالات حول اكتشاف الثغرات والمكافآت.</div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://google.com">
+                    <div class="card-title">Malware</div>
+                    <div class="card-content">تحليلات لأنواع مختلفة من البرمجيات الخبيثة وطرق عملها.</div>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="https://google.com">
+                    <div class="card-title">MEMZ-Clean</div>
+                    <div class="card-content">فيروس يقوم بعرض تأثيرات مرئية مدهشة على الشاشة دون إحداث أضرار للنظام.</div>
+                    </a>
+                </div>
+        </section>
+
+        <section class="container" id="about">
+            <h2 class="page-title">من أنا؟</h2>
+            <p class="intro-description">
+                أنا مطور وخبير أمن معلومات شغوف بمشاركة المعرفة. هدفي من هذا الموقع هو تبسيط المفاهيم المعقدة في عالم الأمن السيبراني وجعلها في متناول الجميع.
+            </p>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="social-links">
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <p class="copyright">&copy; 2025 Madar. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- وظيفة قائمة البرجر (Burger Menu) ---
+            const burgerIcon = document.getElementById('burger-icon');
+            const mainNav = document.getElementById('main-nav');
+
+            if (burgerIcon && mainNav) {
+                // عند النقر على أيقونة البرجر
+                burgerIcon.addEventListener('click', function() {
+                    mainNav.classList.toggle('active'); // تبديل فئة 'active' على القائمة
+                    const icon = burgerIcon.querySelector('i'); // الحصول على أيقونة Font Awesome (عادةً ما تكون عنصر <i>)
+
+                    // تغيير أيقونة البرجر بين "القوائم" و "X" لتعكس حالة القائمة
+                    if (mainNav.classList.contains('active')) {
+                        icon.classList.remove('fa-bars'); // إزالة أيقونة الخطوط (القوائم)
+                        icon.classList.add('fa-times');   // إضافة أيقونة X (إغلاق)
+                    } else {
+                        icon.classList.remove('fa-times'); // إزالة أيقونة X
+                        icon.classList.add('fa-bars');     // إضافة أيقونة الخطوط
                     }
+                });
 
-
-
-
-
-                body {
-                    font-family: 'Share Tech Mono', monospace;
-                    line-height: 1.6;
-                    color: var(--primary-color);
-                    background-color: var(--background-color);
-                    margin: 0;
-                    padding: 0;
-                    overflow-x: hidden;
-                    background-image:
-                        linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
-                    background-size: 20px 20px;
-                    animation: backgroundScroll 20s linear infinite;
-                    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewport="0 0 24 24" style="fill:rgba(255,127,80,1);"><path d="M12 0c1.104.001 2 .896 2 2v6h8c1.104 0 2 .896 2 2s-.896 2-2 2h-8v8c0 1.104-.896 2-2 2s-2-.896-2-2v-8h-8c-1.104 0-2-.896-2-2s.896-2 2-2h8v-6c0-1.104.896-2 2-2z"/></svg>'), auto;
-                }
-                @keyframes backgroundScroll {
-                    0% { background-position: 0 0; }
-                    100% { background-position: 0 20px; }
-                }
-
-
-
-
-                .container {
-                    max-width: 900px;
-                    margin: 2rem auto;
-                    padding: 2rem;
-                    background-color: var(--container-bg);
-                    box-shadow: 0 0 20px var(--primary-color);
-                    border-radius: 10px;
-                    position: relative;
-                    overflow: hidden;
-                    border: 1px solid var(--primary-color);
-                }
-                .container::before {
-                    content: "";
-                    position: absolute;
-                    top: -50%;
-                    left: -50%;
-                    width: 200%;
-                    height: 200%;
-                    background: repeating-linear-gradient(
-                        0deg,
-                        transparent,
-                        transparent 2px,
-                        rgba(0, 255, 255, 0.1) 2px,
-                        rgba(0, 255, 255, 0.1) 4px
-                    );
-                    animation: scan 10s linear infinite;
-                    pointer-events: none;
-                    z-index: -1;
-                }
-                @keyframes scan {
-                    0% { transform: translateY(0); }
-                    100% { transform: translateY(50%); }
-                }
-                .animated-text {
-                    position: relative;
-                    display: inline-block;
-                    font-size: 2.5rem;
-                    font-weight: bold;
-                    text-transform: uppercase;
-                    letter-spacing: 4px;
-                    color: var(--secondary-color);
-                    text-shadow: 0 0 10px var(--secondary-color);
-                    margin-bottom: 1rem;
-                    width: 100%;
-                    text-align: center;
-                }
-                .animated-text::before,
-                .animated-text::after {
-                    content: attr(data-text);
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    z-index: -1;
-                }
-                .animated-text::before {
-                    color: var(--accent-color);
-                    animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-                }
-                .animated-text::after {
-                    color: var(--primary-color);
-                    animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
-                }
-                * {
-                    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewport="0 0 24 24" style="fill:rgba(110,68,255,1);transform:rotate(-45deg);"><path d="M12 2L2 22l10-6 10 6L12 2z"/></svg>'), auto;
-                }
-                a, .stat-card, .vulnerable-item, button, input[type="submit"] {
-                    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewport="0 0 24 24" style="fill:rgba(110,68,255,1);transform:rotate(-45deg);"><path d="M12 2L2 22l10-6 10 6L12 2z"/></svg>'), pointer;
-                }
-                a:hover, .stat-card:hover, button:hover, input[type="submit"]:hover {
-                    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewport="0 0 24 24" style="fill:rgba(255,127,80,1);transform:rotate(-45deg);"><path d="M12 2L2 22l10-6 10 6L12 2z"/></svg>'), pointer;
-                    filter: drop-shadow(0 0 6px var(--secondary-color));
-                }
-                .vulnerable-item:hover {
-                    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewport="0 0 24 24" style="fill:rgba(255,0,0,1);transform:rotate(-45deg);"><path d="M12 2L2 22l10-6 10 6L12 2z"/></svg>'), pointer;
-                    filter: drop-shadow(0 0 6px #f00);
-                }
-                @keyframes glitch {
-                    0% { transform: translate(0); }
-                    20% { transform: translate(-2px, 2px); }
-                    40% { transform: translate(-2px, -2px); }
-                    60% { transform: translate(2px, 2px); }
-                    80% { transform: translate(2px, -2px); }
-                    100% { transform: translate(0); }
-                }
-                .logo {
-                    text-align: center;
-                    margin-bottom: 2rem;
-                }
-                .logo svg {
-                    max-width: 300px;
-                    height: auto;
-                }
-                .summary {
-                    background-color: rgba(0, 40, 80, 0.6);
-                    padding: 1.5rem;
-                    border-radius: 8px;
-                    margin-bottom: 2rem;
-                    border: 1px solid var(--primary-color);
-                    box-shadow: 0 0 10px var(--primary-color);
-                }
-                .summary-item {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-bottom: 0.5rem;
-                    border-bottom: 1px solid rgba(0, 255, 255, 0.3);
-                    padding-bottom: 0.5rem;
-                }
-                .summary-label {
-                    font-weight: bold;
-                    color: var(--accent-color);
-                }
-                .summary-value {
-                    color: var(--primary-color);
-                }
-                .progress-bar {
-                    width: 100%;
-                    height: 20px;
-                    background-color: rgba(0, 255, 255, 0.1);
-                    border-radius: 10px;
-                    overflow: hidden;
-                    margin-bottom: 1rem;
-                }
-                .progress {
-                    width: 53.65853658536586%;
-                    height: 100%;
-                    background-color: var(--secondary-color);
-                    animation: pulse 2s infinite;
-                }
-                @keyframes pulse {
-                    0% { opacity: 0.6; }
-                    50% { opacity: 1; }
-                    100% { opacity: 0.6; }
-                }
-                .stats-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                    gap: 1rem;
-                    margin-bottom: 2rem;
-                }
-                .stat-card {
-                    background-color: rgba(0, 40, 80, 0.6);
-                    padding: 1rem;
-                    border-radius: 8px;
-                    text-align: center;
-                    border: 1px solid var(--primary-color);
-                    transition: all 0.3s ease;
-                }
-                .stat-card:hover {
-                    transform: translateY(-5px);
-                    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
-                }
-                .stat-value {
-                    font-size: 2rem;
-                    font-weight: bold;
-                    color: var(--accent-color);
-                }
-                .stat-label {
-                    font-size: 0.9rem;
-                    color: var(--primary-color);
-                }
-                .timeline {
-                    position: relative;
-                    max-width: 1200px;
-                    margin: 2rem auto;
-                }
-                .timeline::after {
-                    content: '';
-                    position: absolute;
-                    width: 6px;
-                    background-color: var(--primary-color);
-                    top: 0;
-                    bottom: 0;
-                    left: 50%;
-                    margin-left: -3px;
-                }
-                .timeline-item {
-                    padding: 0px 0px;
-                    position: relative;
-                    background-color: inherit;
-                    width: 50%;
-                }
-                .timeline-item::after {
-                    content: '';
-                    position: absolute;
-                    width: 25px;
-                    height: 25px;
-                    right: -17px;
-                    background-color: var(--background-color);
-                    border: 4px solid var(--accent-color);
-                    top: 15px;
-                    border-radius: 50%;
-                    z-index: 1;
-                }
-                .left {
-                    left: 0;
-                }
-                .right {
-                    left: 50%;
-                }
-                .right::after {
-                    left: -16px;
-                }
-                .timeline-content {
-                    padding: 20px 30px;
-                    background-color: rgba(0, 40, 80, 0.6);
-                    position: relative;
-                    border-radius: 7px;
-                }
-                .vulnerable-item {
-                    background-color: rgba(255, 0, 0, 0.2);
-                    border: 1px solid #f00;
-                    color: #f00;
-                    padding: 1rem;
-                    margin-bottom: 1rem;
-                    border-radius: 4px;
-                    word-break: break-all;
-                    box-shadow: 0 0 10px #f00;
-                    transition: all 0.3s ease;
-                    position: relative;
-                    overflow: hidden;
-                }
-                .vulnerable-item::before {
-                    content: "-UST-";
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    background-color: #f00;
-                    color: #000;
-                    font-size: 0.7rem;
-                    padding: 0.2rem 0.5rem;
-                    transform: rotate(45deg) translate(10%, -30%);
-                }
-                .vulnerable-item:hover {
-                    transform: scale(1.02);
-                    box-shadow: 0 0 20px #f00;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-
-<div class="logo">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
-        <defs>
-            <!-- Gradient Definitions -->
-            <linearGradient id="scanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#6E44FF"/>
-                <stop offset="50%" style="stop-color:#1CDCE8"/>
-                <stop offset="100%" style="stop-color:#F77E21"/>
-            </linearGradient>
-            <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:#FF5F6D"/>
-                <stop offset="50%" style="stop-color:#FFC371"/>
-                <stop offset="100%" style="stop-color:#FF5F6D"/>
-            </linearGradient>
-        </defs>
-
-        <!-- Central Logo Text -->
-        <g transform="translate(150,150)">
-            <text x="0" y="5" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="url(#textGradient)" text-anchor="middle">SY</text>
-        </g>
-
-        <!-- Points around the logo with individual animations -->
-        <g id="points">
-            <circle id="point1" cx="150" cy="40" r="3" fill="#FF5F6D" />
-            <circle id="point2" cx="200" cy="100" r="3" fill="#FFC371" />
-            <circle id="point3" cx="175" cy="175" r="3" fill="#F77E21" />
-            <circle id="point4" cx="125" cy="175" r="3" fill="#1CDCE8" />
-            <circle id="point5" cx="100" cy="100" r="3" fill="#6E44FF" />
-        </g>
-
-        <!-- Individual 0's and 1's with separate animations -->
-        <g id="binaryNumbers">
-            <text id="number1" x="30" y="30" font-family="Arial, sans-serif" font-size="20" fill="#6E44FF">0</text>
-            <text id="number2" x="70" y="50" font-family="Arial, sans-serif" font-size="20" fill="#1CDCE8">1</text>
-            <text id="number3" x="110" y="20" font-family="Arial, sans-serif" font-size="20" fill="#F77E21">0</text>
-            <text id="number4" x="150" y="90" font-family="Arial, sans-serif" font-size="20" fill="#FF5F6D">1</text>
-            <text id="number5" x="190" y="40" font-family="Arial, sans-serif" font-size="20" fill="#FFC371">0</text>
-        </g>
-
-        <!-- Animations for each number -->
-        <g>
-            <animateTransform xlink:href="#number1" attributeName="transform" type="translate" values="0,0;50,-50;0,0;-50,-50;0,0" dur="5s" repeatCount="indefinite"/>
-            <animateTransform xlink:href="#number2" attributeName="transform" type="translate" values="0,0;50,-40;0,0;-50,-40;0,0" dur="5s" repeatCount="indefinite"/>
-            <animateTransform xlink:href="#number3" attributeName="transform" type="translate" values="0,0;40,-30;0,0;-40,-30;0,0" dur="5s" repeatCount="indefinite"/>
-            <animateTransform xlink:href="#number4" attributeName="transform" type="translate" values="0,0;30,-50;0,0;-30,-50;0,0" dur="5s" repeatCount="indefinite"/>
-            <animateTransform xlink:href="#number5" attributeName="transform" type="translate" values="0,0;30,-20;0,0;-30,-20;0,0" dur="5s" repeatCount="indefinite"/>
-        </g>
-
-        <!-- Animations for each point -->
-        <g>
-            <animateTransform xlink:href="#point1" attributeName="transform" type="translate" values="0,0;30,-30;0,0;-30,-30;0,0" dur="5s" repeatCount="indefinite"/>
-            <animateTransform xlink:href="#point2" attributeName="transform" type="translate" values="0,0;30,-40;0,0;-30,-40;0,0" dur="5s" repeatCount="indefinite"/>
-            <animateTransform xlink:href="#point3" attributeName="transform" type="translate" values="0,0;40,-30;0,0;-40,-30;0,0" dur="5s" repeatCount="indefinite"/>
-            <animateTransform xlink:href="#point4" attributeName="transform" type="translate" values="0,0;30,-50;0,0;-30,-50;0,0" dur="5s" repeatCount="indefinite"/>
-            <animateTransform xlink:href="#point5" attributeName="transform" type="translate" values="0,0;30,-20;0,0;-30,-20;0,0" dur="5s" repeatCount="indefinite"/>
-        </g>
-    </svg>
-</div>
-
-
-
-
-
-
-
-
-
-
-                </div>
-                <h1 class="animated-text" data-text="اهلا بك في مدونتي">اهلا بك في مدونتي</h1>
-                <div class="summary">
-                    <div class="summary-item">
-                        <span class="summary-label">Name:</span>
-                        <span class="summary-value">Saeed</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-label">university:</span>
-                        <span class="summary-value">UST in Mukalla</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-label">major:</span>
-                        <span class="summary-value">Cyber Security</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-label">My Love:</span>
-                        <span class="summary-value">المعصوب & Linux</span>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value"><a href="https://x.com/sb3ly?s=21&t=WmTmA5YJUxUON0S6jThHQA" > <img src="/security/img/X.png" alt="X" height=50px align=50px> </a></div>
-                        <div class="stat-label">X & Twitter</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value"><a href="https://www.instagram.com/slzep/" > <img src="/security/img/IN.png" alt="Instagram" height=50px align=50px ></a></div>
-                        <div class="stat-label">Instagram</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value"><a href="https://github.com/sb3ly" > <img src="/security/img/GH.png" alt="GitHub" height=50px align=50px ></a></div>
-                        <div class="stat-label">GitHub</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value"><a href="https://t.me/slzep" > <img src="/security/img/TLG.png" alt="Telegram" height=50px align=50px ></a></div>
-                        <div class="stat-label">Telegram</div>
-                    </div>
-                </div>
-                <h2 class="animated-text" data-text="MY CERTIFICATES and experiences">MY CERTIFICATES and experiences</h2>
-                <div class="timeline">
-                    <div class="timeline-item left">
-                        <div class="timeline-content">
-                            <h3>FULL PENTESTING COURCE from SECSTEIN SECURITY</h3>
-                            <img src="/security/img/1.jpg" alt="SECSTEIN" class="responsive-img">
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-content">
-                            <h3>CYBER SECURITY from EDRAAK</h3>
-                            <img src="/security/img/2.jpg" alt="EDRAAK" class="responsive-img">
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-content">
-                            <h3>INTERNET & EMAIL ESSENTIALS from EDRAAK</h3>
-                            <img src="/security/img/3.jpg" alt="EDRAAK" class="responsive-img">
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-content">
-                            <h3>LINUX 100 from TCM SECURITY</h3>
-                            <img src="/security/img/4.jpg" alt="TCM SECURITY" class="responsive-img">
-                        </div>
-                    </div>
-                </div>
-                <h2 class="animated-text" data-text="Articles">Articles</h2>
-                <ul class="vulnerable-list">
-                    <li class="vulnerable-item">
-                    <a href="google.com" target="_blank" style="color: inherit; text-decoration: none;">الموضوع الأول</a></li>
-
-                  <li class="vulnerable-item"><a href="google.com" target="_blank" style="color: inherit; text-decoration: none;">الموضوع الثاني</a></li>
-
-                   <li class="vulnerable-item"><a href="google.com" style="color: inherit; text-decoration: none;">الموضوع الثالث</a></li>
-
-                </ul>
-
-            </div>
-        </body>
-        </html>
+                // إغلاق القائمة عند النقر على أي رابط (مفيد لتطبيقات الصفحة الواحدة أو للانتقال السلس)
+                const navLinks = mainNav.querySelectorAll('a'); // الحصول على جميع الروابط داخل القائمة
+                navLinks.forEach(link => { // تكرار على كل رابط
+                    link.addEventListener('click', () => {
+                        // إذا كانت القائمة مفتوحة، أغلقها وغير الأيقونة
+                        if (mainNav.classList.contains('active')) {
+                            mainNav.classList.remove('active'); // إزالة فئة 'active' لإخفاء القائمة
+                            const icon = burgerIcon.querySelector('i');
+                            icon.classList.remove('fa-times'); // إزالة أيقونة X
+                            icon.classList.add('fa-bars');     // إضافة أيقونة الخطوط
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
