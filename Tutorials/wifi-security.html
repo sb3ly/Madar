@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/black-hole.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>MADAR - تأمين شبكة الواي فاي</title>
+    <style>
+        /* CSS Variables for easy theme management */
+        :root {
+            --bg-color: #000000;
+            --primary-color: #7e2eff;
+            --primary-glow: #6e44ff;
+            --secondary-glow: #a200ff;
+            --border-color: #5a14dd;
+            --text-color: #e0e0e0;
+            --card-bg: #0a0a0a;
+            --red-color: #ff4c4c;
+            --accent-green: #39ff14;
+        }
+
+        /* Basic Setup */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                linear-gradient(45deg, rgba(125, 55, 255, 0.342) 1px, transparent 1px),
+                linear-gradient(-45deg, rgba(157, 71, 255, 0.3) 1px, transparent 1px);
+            background-size: 25px 25px;
+            background-blend-mode: lighten;
+            font-family: 'Tahoma', 'Segoe UI', Arial, sans-serif;
+            color: var(--text-color);
+            padding-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- Header & Navigation --- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+
+        .site-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .site-logo .red {
+            color: var(--red-color);
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .main-nav a {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            color: var(--primary-color);
+            text-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        #burger-icon {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+
+        #burger-icon:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Main Content --- */
+        main {
+            flex-grow: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            border-radius: 12px;
+            background-color: rgba(0, 0, 0, 0.85);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        /* Article Content (General text, paragraphs, lists) */
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 2rem;
+        }
+
+        .article-content h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px var(--primary-glow);
+            text-align: right; /* لمحاذاة العناوين الفرعية إلى اليمين */
+        }
+
+        .article-content h3 {
+            font-size: 1.5rem;
+            color: var(--accent-green);
+            margin-top: 2rem;
+            margin-bottom: 0.8rem;
+            text-align: right; /* لمحاذاة العناوين الفرعية إلى اليمين */
+        }
+
+        .article-content p {
+            margin-bottom: 1rem;
+        }
+
+        .article-content ul {
+            list-style: none; /* إزالة النقاط الافتراضية */
+            padding-right: 20px; /* مسافة بادئة للقائمة */
+            margin-bottom: 1rem;
+        }
+
+        .article-content ul li {
+            position: relative;
+            margin-bottom: 0.5rem;
+            padding-right: 15px; /* مسافة للنقطة المخصصة */
+        }
+
+        .article-content ul li::before {
+            content: '•'; /* استخدام نقطة مخصصة */
+            color: var(--primary-color);
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 1.2em;
+        }
+
+        .article-content strong {
+            color: var(--primary-glow);
+        }
+
+        /* Code Block Styling */
+        .code-block {
+            background-color: #1a1a1a;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            position: relative;
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #c9d1d9;
+            direction: ltr; /* Ensure LTR for code */
+            text-align: left; /* Ensure left-aligned for code */
+        }
+
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap; /* Wrap long lines */
+            word-wrap: break-word;
+        }
+
+        .code-block .copy-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background-color 0.3s;
+        }
+
+        .code-block .copy-btn:hover {
+            background-color: var(--primary-glow);
+        }
+
+        /* --- Footer --- */
+        .main-footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+            background-color: rgba(10, 10, 10, 0.5);
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+            margin: 0 15px;
+            color: #aaa;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* --- Responsive Design for Mobile --- */
+        @media (max-width: 768px) {
+            .main-nav {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                display: none;
+                transition: all 0.3s ease-in-out;
+            }
+
+            .main-nav.active {
+                display: block;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                gap: 0;
+            }
+
+            .main-nav ul li {
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .main-nav ul li:last-child {
+                border-bottom: none;
+            }
+
+            .main-nav a {
+                display: block;
+                padding: 15px;
+            }
+
+            #burger-icon {
+                display: block;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .article-content {
+                font-size: 1rem;
+            }
+            .article-content h2 {
+                font-size: 1.7rem;
+            }
+            .article-content h3 {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .page-title {
+                font-size: 1.8rem;
+            }
+            .article-content h2 {
+                font-size: 1.5rem;
+            }
+            .article-content h3 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <a href="index.html" class="site-logo">M<span class="red">a</span>dar</a>
+        <nav class="main-nav" id="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Tutorials.html" class="active">Tutorials</a></li>
+                <li><a href="tools.html">Tools</a></li>
+                <li><a href="about.html">whoami</a></li>
+                <li><a href="notes.html ">notes</a></li>
+            </ul>
+        </nav>
+        <div id="burger-icon">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </header>
+
+    <main>
+        <section class="container">
+            <h1 class="page-title">🔐 حماية شبكة الواي فاي: نصائح من ذيب الرياض!</h1>
+
+            <div class="article-content">
+                <p>أكيد يا سعيد، خذ هالخطوات المجربة واللي تساعدك تحمي شبكة الواي فاي حقّك من المتطفلين والهاكرز، بأسلوب سهل وبلهجتنا الحبيبة، أهل الرياض:</p>
+
+                ---
+                <h2>🔐 1. غير اسم الشبكة (SSID)</h2>
+                <p>أول شي سوّه، لا تخلي اسم الشبكة هو نفسه اللي يجي من الراوتر، زي "STC1234" ولا "Huawei_5G"، غيره لاسم خاص فيك، بس لا تحط فيه معلوماتك.</p>
+                <blockquote><strong>مثال:</strong> بدل ما يكون "STC_5G_8493" خله "بيت_أبو_سعود" ولا "واي_فاي_الطايف".</blockquote>
+
+                ---
+                <h2>🔑 2. حط كلمة مرور قوية</h2>
+                <p>كلمة السر لازم تكون صعبة، لا تستخدم 123456 ولا اسمك وتاريخ ميلادك.</p>
+                <blockquote><strong>خلك ذيب:</strong> حط حروف كبيرة وصغيرة، أرقام ورموز، زي: <span style="direction: ltr; display: inline-block; color: var(--accent-green);">`Riy@dh2025!net`</span></blockquote>
+
+                ---
+                <h2>🔒 3. فعل التشفير القوي (WPA3 أو WPA2)</h2>
+                <p>ادخل إعدادات الراوتر، وتأكد إن التشفير شغال على <strong>WPA2</strong> على الأقل، ويفضل <strong>WPA3</strong> لو الراوتر يدعم.</p>
+                <blockquote><strong>تحذير:</strong> إذا شفت WEP، عطه شلوت وقفله، لأنه قديم وسهل اختراقه.</blockquote>
+
+                ---
+                <h2>📱 4. طفي WPS</h2>
+                <p>ميزة WPS صح إنها تسهّل الاتصال، بس بعد تسهّل على الهاكرز يدخلون، فاقطعها.</p>
+                <blockquote>ادخل إعدادات الراوتر، دور على WPS و<strong>عطها تعطيل (Disable).</strong></blockquote>
+
+                ---
+                <h2>📵 5. راقب من داخل الشبكة</h2>
+                <p>افتح صفحة الراوتر وشف مين متصل. تلقى جدول فيه كل الأجهزة.</p>
+                <blockquote><strong>لو شفت جهاز ما تعرفه؟</strong> خذه بالـ <span style="direction: ltr; display: inline-block;">MAC Address</span> وامنعه (Block).</blockquote>
+
+                ---
+                <h2>🧱 6. حدّث الراوتر</h2>
+                <p>زي ما تحدث جوالك، الراوتر له تحديثات تسد ثغرات.</p>
+                <blockquote>ادخل الإعدادات، دور على قسم "Firmware" أو "Software Update" وسوّ له تحديث.</blockquote>
+
+                ---
+                <h2>👻 7. أخفِ اسم الشبكة (اختياري)</h2>
+                <p>تقدر تخلي الشبكة ما تطلع للناس، بس هذا ما يمنع المحترفين، يعني مجرد طبقة زيادة.</p>
+                <p> ماندري يمكن نسوي شرح عليها بعدين-👻</p>
+                ---
+                <h2>👮‍♂️ 8. قلّل عدد المتصلين</h2>
+                <p>بعض الراوترات تقدر تحدد عدد الأجهزة، مثلًا تحط بس 10 أجهزة مسموحة.</p>
+
+                ---
+                <h2>9. لا تعطي الرقم لأي أحد</h2>
+                <p><strong>وهذي اللي سألت عنها بالتحديد:</strong></p>
+                <blockquote>لا تعطي كلمة السر لكل من جاك، واذا جاك ضيف، سو له شبكة خاصة (Guest network) وخلها بكلمة مرور لحالها.</blockquote>
+
+                ---
+                <h2>💡 طيب، كيف تسوي شبكة خاصة للضيوف (Guest Network)؟</h2>
+                <ol>
+                    <li>
+                        <strong>ادخل على صفحة الراوتر:</strong>
+                        <p>تفتح المتصفح وتكتب العنوان هذا:</p>
+                        <div class="code-block">
+                            <pre><code>192.168.1.1</code></pre>
+                        </div>
+                        <p>أو أحيانًا:</p>
+                        <div class="code-block">
+                            <pre><code>192.168.0.1</code></pre>
+                        </div>
+                        <p>بيطلب منك اسم المستخدم وكلمة السر. غالبًا تكون:</p>
+                        <div class="code-block">
+                            <pre><code>admin / admin</code></pre>
+                        </div>
+                        <p>أو تلقاها مكتوبة خلف الراوتر.</p>
+                    </li>
+                    <li>
+                        <strong>دور على خيار اسمه "Guest Network"</strong>
+                        <p>تلقاه في قسم "Wireless Settings" أو "Wi-Fi Settings".</p>
+                    </li>
+                    <li>
+                        <strong>فعل الشبكة (Enable Guest Network)</strong>
+                        <p>بيكون فيه زر تفعيل، شغّله.</p>
+                    </li>
+                    <li>
+                        <strong>اختر اسم للشبكة (SSID)</strong>
+                        <p>مثلًا: <strong style="color: var(--accent-green);">`ضيوف_بو_سعيد`</strong></p>
+                    </li>
+                    <li>
+                        <strong>حط لهم كلمة مرور خاصة</strong>
+                        <p>حط باسورد غير عن شبكتك الأصلية، وخلها قوية بس سهلة عليهم شوي.</p>
+                        <blockquote>مثلًا: <span style="direction: ltr; display: inline-block; color: var(--accent-green);">`Welcome2025!`</span></blockquote>
+                    </li>
+                    <li>
+                        <strong>حدد صلاحيات الشبكة (اختياري)</strong>
+                        <p>بعض الراوترات تعطيك خيار تخلي الضيوف ما يشوفون الأجهزة اللي على الشبكة الأصلية. فعلها إذا تقدر.</p>
+                    </li>
+                    <li>
+                        <strong>اضغط "Save" أو "Apply"</strong>
+                    </li>
+                </ol>
+
+                <p>وبكذا تكون سويت شبكة خاصة للضيوف، لو أحد جاك قال:</p>
+                <blockquote>"أعطني الرقم"،<br>تعطيه شبكة الضيوف وتقول له:<br>"خذ هذي، ولا تكثر تحميل  ".</blockquote>
+
+                ---
+                <h2>💡 10. غيّر بيانات الدخول للراوتر</h2>
+                <p>لا تخلّي اسم المستخدم وكلمة المرور هي "admin" و"admin" أو فاضية.</p>
+                <blockquote>ادخل إعدادات الراوتر، غيّرها لـ شي خاص فيك.</blockquote>
+
+                <p>إذا طبقت هالخطوات،  راح تطفش المخترق:</p>
+                <p style="text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--primary-glow); margin-top: 2rem;">"وراح يدور غيرك👻 "</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="social-links">
+            <a href="https://x.com/sb3ly" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://github.com/sb3ly" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- وظيفة قائمة البرجر (Burger Menu) ---
+            const burgerIcon = document.getElementById('burger-icon');
+            const mainNav = document.getElementById('main-nav');
+
+            if (burgerIcon && mainNav) {
+                burgerIcon.addEventListener('click', function() {
+                    mainNav.classList.toggle('active');
+                    const icon = burgerIcon.querySelector('i');
+                    if (mainNav.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+
+                const navLinks = mainNav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (mainNav.classList.contains('active')) {
+                            mainNav.classList.remove('active');
+                            const icon = burgerIcon.querySelector('i');
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                        }
+                    });
+                });
+            }
+
+            // --- وظيفة زر النسخ (Copy Button) ---
+            window.copyCode = function(button) {
+                const codeBlock = button.nextElementSibling.querySelector('code');
+                const textToCopy = codeBlock.innerText;
+
+
+            };
+        });
+    </script>
+</body>
+</html>
