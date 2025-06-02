@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="file:///D:/UST/web/img/icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>MADAR - ملاحظات ومشاكل قيد الحل</title>
+    <style>
+        /* CSS Variables for easy theme management */
+        :root {
+            --bg-color: #000000;
+            --primary-color: #7e2eff;
+            --primary-glow: #6e44ff;
+            --secondary-glow: #a200ff;
+            --border-color: #5a14dd;
+            --text-color: #e0e0e0;
+            --card-bg: #0a0a0a;
+            --red-color: #ff4c4c;
+            --accent-green: #39ff14;
+        }
+
+        /* Basic Setup */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                linear-gradient(45deg, rgba(125, 55, 255, 0.342) 1px, transparent 1px),
+                linear-gradient(-45deg, rgba(157, 71, 255, 0.3) 1px, transparent 1px);
+            background-size: 25px 25px;
+            background-blend-mode: lighten;
+            font-family: 'Tahoma', 'Segoe UI', Arial, sans-serif;
+            color: var(--text-color);
+            padding-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- Header & Navigation --- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+
+        .site-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .site-logo .red {
+            color: var(--red-color);
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .main-nav a {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            color: var(--primary-color);
+            text-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        #burger-icon {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+
+        #burger-icon:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Main Content --- */
+        main {
+            flex-grow: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            border-radius: 12px;
+            background-color: rgba(0, 0, 0, 0.85);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        /* Specific styles for article content - now used for notes */
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 2rem;
+        }
+        
+        .article-content h2 {
+            font-size: 1.8rem; /* Adjusted for note titles */
+            color: var(--primary-color);
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            text-shadow: 0 0 8px var(--primary-glow);
+            text-align: right;
+        }
+
+        .article-content p {
+            margin-bottom: 1rem;
+        }
+
+        /* Specific styles for .entry elements */
+        .entry {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            padding: 20px;
+            margin-bottom: 25px;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .entry:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .entry .date {
+            color: #aaa; /* Lighter color for dates */
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            display: block; /* Ensures it takes full width */
+            text-align: left; /* Aligns date to left */
+        }
+        
+        .entry h2 { /* Targeting h2 specifically within .entry */
+            color: var(--accent-green); /* Changed color for distinction */
+            font-size: 1.5rem;
+            margin-top: 0; /* Remove default margin */
+            margin-bottom: 10px;
+            text-shadow: none; /* Remove glow for these titles */
+            text-align: right; /* Align right */
+        }
+
+        .entry p {
+            color: var(--text-color);
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        /* --- Footer --- */
+        .main-footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+            background-color: rgba(10, 10, 10, 0.5);
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+            margin: 0 15px;
+            color: #aaa;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* --- Responsive Design for Mobile --- */
+        @media (max-width: 768px) {
+            .main-nav {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                display: none;
+                transition: all 0.3s ease-in-out;
+            }
+
+            .main-nav.active {
+                display: block;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                gap: 0;
+            }
+
+            .main-nav ul li {
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .main-nav ul li:last-child {
+                border-bottom: none;
+            }
+
+            .main-nav a {
+                display: block;
+                padding: 15px;
+            }
+
+            #burger-icon {
+                display: block;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .article-content {
+                font-size: 1rem;
+            }
+            .entry h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .page-title {
+                font-size: 1.8rem;
+            }
+            .entry h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <a href="index.html" class="site-logo">M<span class="red">a</span>dar</a>
+        <nav class="main-nav" id="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Tutorials.html">Tutorials</a></li>
+                <li><a href="tools.html">Tools</a></li>
+                <li><a href="about.html">whoami</a></li>
+                <li><a href="notes.html">notes</a></li>
+              
+            </ul>
+        </nav>
+        <div id="burger-icon">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </header>
+
+    <main>
+        <section class="container">
+            <h1 class="page-title">📒 ملاحظات ومشاكل قيد الحل</h1>
+
+            <div class="article-content">
+                <div class="entry">
+                    <div class="date">2 يونيو 2025</div>
+                    <h2>مشكلة في عرض موقعي على الجوال</h2>
+                    <p>لاحظت أن بعض العناصر تطلع خارج الشاشة، الحل كان تعديل العرض في الـ CSS باستخدام <strong style="direction: ltr; display: inline-block;">`max-width: 100%`</strong>.</p>
+                </div>
+
+                <div class="entry">
+                    <div class="date">1 يونيو 2025</div>
+                    <h2>أفكار عشوائية 🤔</h2>
+                    <p>أفكر أضيف قسم فيه أدوات بسيطة أبرمجها وأخلي الناس يستخدمونها مباشرة من الموقع.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="social-links">
+            <a href="x.com/sb3ly" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://github.com/sb3ly" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- وظيفة قائمة البرجر (Burger Menu) ---
+            const burgerIcon = document.getElementById('burger-icon');
+            const mainNav = document.getElementById('main-nav');
+
+            if (burgerIcon && mainNav) {
+                burgerIcon.addEventListener('click', function() {
+                    mainNav.classList.toggle('active');
+                    const icon = burgerIcon.querySelector('i');
+                    if (mainNav.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+
+                const navLinks = mainNav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (mainNav.classList.contains('active')) {
+                            mainNav.classList.remove('active');
+                            const icon = burgerIcon.querySelector('i');
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
